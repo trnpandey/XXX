@@ -1,0 +1,1 @@
+public interface UserRepository extends MongoRepository<UserData, String> {}
