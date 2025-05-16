@@ -1,17 +1,12 @@
-# Use Eclipse Temurin OpenJDK 17 (LTS) as the base image
-FROM eclipse-temurin:17-jre-alpine
-
-# Set environment variables
-ENV JAVA_OPTS=""
-
-# Set the working directory
+# ---- Build stage ----
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copy the built Spring Boot jar into the container
-COPY build/libs/*.jar app.jar
-
-# Expose the port your app runs on (default 8080)
+# ---- Run stage ----
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-
-# Run the application
-ENTRYPOINT exec java $JAVA_OPTS -jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
