@@ -1,0 +1,10 @@
+# Ignore build artifacts except the jar file
+build/
+!build/libs/*.jar
+target/
+!target/*.jar
+.gradle/
+.idea/
+.git/
+*.iml
+*.log
