@@ -11,17 +11,18 @@
   <name>VentListenBackend</name>
   <description>Spring Boot backend for Venter-Listener PWA</description>
 
+  <!-- Hardcoded parent version -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.2.5</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
   <properties>
     <java.version>17</java.version>
     <spring-boot.version>3.2.5</spring-boot.version>
   </properties>
-
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>${spring-boot.version}</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
 
   <dependencies>
     <!-- Core Spring Boot -->
@@ -30,26 +31,26 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
-    <!-- Spring Boot WebSocket -->
+    <!-- WebSocket -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-websocket</artifactId>
     </dependency>
 
-    <!-- Spring Data MongoDB -->
+    <!-- MongoDB -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-mongodb</artifactId>
     </dependency>
 
-    <!-- Redis (Redisson) -->
+    <!-- Redisson (Redis) -->
     <dependency>
       <groupId>org.redisson</groupId>
       <artifactId>redisson-spring-boot-starter</artifactId>
       <version>3.27.2</version>
     </dependency>
 
-    <!-- Spring Security (JWT/Resource Server) -->
+    <!-- Security -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
@@ -59,21 +60,21 @@
       <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
     </dependency>
 
-    <!-- Firebase Admin SDK for Google Auth -->
+    <!-- Firebase Admin SDK -->
     <dependency>
       <groupId>com.google.firebase</groupId>
       <artifactId>firebase-admin</artifactId>
       <version>9.2.0</version>
     </dependency>
 
-    <!-- Lombok (optional, for concise model code; remove if unused) -->
+    <!-- Lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
     </dependency>
 
-    <!-- Spring Boot Test -->
+    <!-- Testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -83,7 +84,7 @@
 
   <build>
     <plugins>
-      <!-- Spring Boot Maven Plugin -->
+      <!-- Spring Boot Plugin using property -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
