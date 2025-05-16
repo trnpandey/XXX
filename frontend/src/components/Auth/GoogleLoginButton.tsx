@@ -7,7 +7,7 @@ const GoogleLoginButton: React.FC = () => {
     const auth = getAuth();
     try {
       await signInWithPopup(auth, provider);
-      window.location.href = "/home";
+      // Do not navigate here; let Landing handle it after token is set
     } catch {
       alert("Google sign-in failed.");
     }

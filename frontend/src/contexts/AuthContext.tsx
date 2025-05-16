@@ -9,12 +9,14 @@ type AuthContextType = {
   user: User | null;
   token: string | null;
   setToken: (t: string | null) => void;
+  loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   token: null,
   setToken: () => {},
+  loading: true,
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -22,6 +24,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const auth = getAuth();
@@ -35,13 +38,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setToken(null);
         localStorage.removeItem("token");
       }
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, setToken }}>
-      {children}
+    <AuthContext.Provider value={{ user, token, setToken, loading }}>
+      {loading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   );
 };
