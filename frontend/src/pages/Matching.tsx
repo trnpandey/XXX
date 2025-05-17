@@ -34,11 +34,16 @@ const Matching = () => {
           <div key={i} className="guideline">{g}</div>
         ))}
       </div>
-      <label>
-        <input type="checkbox" checked={ack} onChange={() => setAck(!ack)} />
-        I understand and agree to these guidelines
-      </label>
-      {ack ? <div>Matching you now...</div> : <div>Please accept to proceed.</div>}
+      {!ack ? (
+        <button
+          className="matching-accept-btn"
+          onClick={() => setAck(true)}
+        >
+          Please accept and proceed
+        </button>
+      ) : (
+        <div>Matching you now...</div>
+      )}
     </div>
   );
 };
