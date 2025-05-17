@@ -9,7 +9,8 @@ const Home = () => {
 
   const handleStart = async (role: "venter" | "listener") => {
     if (!token) return;
-    await joinQueue(role, token);
+    //TODO: Uncomment the following line when the joinQueue function is implemented
+    //await joinQueue(role, token);
     localStorage.setItem("userRole", role);
     navigate("/matching");
   };
