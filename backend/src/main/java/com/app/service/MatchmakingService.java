@@ -30,11 +30,12 @@ public class MatchmakingService {
     public MatchmakingService() {
         Config config = new Config();
         config.useSingleServer()
-              .setAddress("rediss://patient-turtle-32013.upstash.io:6379")  // Use rediss for TLS
-              .setPassword("AX0NAAIjcDFhOWQ0OGFhYjk3MWU0ZjZkOGFjYzVmMzQ4NjIwMzY0MHAxMA")
-              .setConnectionPoolSize(10)
-              .setConnectionMinimumIdleSize(2);
-
+                .setAddress("rediss://patient-turtle-32013.upstash.io:6379")
+                .setPassword("AX0NAAIjcDFhOWQ0OGFhYjk3MWU0ZjZkOGFjYzVmMzQ4NjIwMzY0MHAxMA")
+                .setDnsMonitoringInterval(5000) // Check every 5 seconds instead of too frequently
+                .setTimeout(30000)              // Increase connection timeout
+                .setRetryAttempts(10)           // Increase retries
+                .setRetryInterval(3000);        // Interval between retries
         this.redissonClient = Redisson.create(config);
     }
 
