@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.redisson.Redisson;
 import org.redisson.api.RLock;
 import org.redisson.api.RQueue;
 import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 
 import com.app.model.Session;
 import com.app.repository.SessionRepository;
@@ -18,14 +20,26 @@ import com.app.repository.SessionRepository;
 @Service
 public class MatchmakingService {
 
-    @Autowired private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
     @Autowired private SessionRepository sessionRepo;
     @Autowired private SimpMessagingTemplate messagingTemplate;
+
     private static final String VENTER_QUEUE = "venterQueue";
     private static final String LISTENER_QUEUE = "listenerQueue";
 
+    public MatchmakingService() {
+        Config config = new Config();
+        config.useSingleServer()
+              .setAddress("rediss://patient-turtle-32013.upstash.io:6379")  // Use rediss for TLS
+              .setPassword("AX0NAAIjcDFhOWQ0OGFhYjk3MWU0ZjZkOGFjYzVmMzQ4NjIwMzY0MHAxMA")
+              .setConnectionPoolSize(10)
+              .setConnectionMinimumIdleSize(2);
+
+        this.redissonClient = Redisson.create(config);
+    }
+
     public void addToQueue(String userId, String role) {
-        RQueue<String> queue = redissonClient.getQueue(role.equals("venter") ? VENTER_QUEUE : LISTENER_QUEUE);
+        RQueue<String> queue = redissonClient.getQueue(role.equalsIgnoreCase("venter") ? VENTER_QUEUE : LISTENER_QUEUE);
         queue.add(userId);
         matchUsers();
     }
