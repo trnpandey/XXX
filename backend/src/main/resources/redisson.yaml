@@ -1,3 +1,0 @@
-singleServerConfig:
-  address: "rediss://patient-turtle-32013.upstash.io:6379"
-  password: "AX0NAAIjcDFhOWQ0OGFhYjk3MWU0ZjZkOGFjYzVmMzQ4NjIwMzY0MHAxMA"
